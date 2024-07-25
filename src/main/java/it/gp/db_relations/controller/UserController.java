@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import it.gp.db_relations.model.User;
 import it.gp.db_relations.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +23,15 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @GetMapping
     @Operation(summary = "Recupera utenti", description = "Torna la lista di tutti gli utenti sul database")
     @ApiResponse(responseCode = "200", description = "Utenti recuperati con successo")
     public List<User> getAllUsers() {
+        // LOG DELLA CHIAMATA EFFETTUATA
+        logger.debug("Una stringa di DEBUG");
+        logger.info("chiamata effettutata al metodo getAllUsers()");
         return userRepository.findAll();
     }
 
@@ -39,8 +46,10 @@ public class UserController {
             @PathVariable Long id
     ) {
         User user = userRepository.findById(id).orElse(null);
-        if (user == null)
+        if (user == null) {
+            logger.error("Utente non trovato con id:" + id);
             return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(user);
     }
 

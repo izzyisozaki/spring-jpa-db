@@ -27,9 +27,6 @@ public class User {
     @JsonManagedReference("user-userdetails")
     private UserDetails userDetails;
 
-    private String address;
-    private String phoneNumber;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference("user-posts")
     private List<Post> posts;

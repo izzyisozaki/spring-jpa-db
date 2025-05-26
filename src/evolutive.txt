@@ -1,3 +1,4 @@
 1) Creazione Model/DTO per ogni oggetto ritornato dalla API
 2) Creazione strato di Service (interfaccia / implementazione)
+4) Modifica Dependency Injection da Autowired a costruttore
 3) Creazione handler eccezioni e status HTTP
